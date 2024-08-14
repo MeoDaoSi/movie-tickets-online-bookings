@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
 @Data
@@ -19,10 +19,22 @@ public abstract class BaseEntity {
     int id;
 
     @Column(nullable = true, updatable = false)
-    LocalDate createTime = LocalDate.now();
+    LocalDateTime createdAt;
 
     @Column(nullable = true, insertable = false)
-    LocalDate updateTime;
+    LocalDateTime updatedAt;
+
+    // Tự động tạo khi tạo dữ liệu
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+    // Tự động tạo khi update dữ liệu
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 
     @Column
     int isDeleted;

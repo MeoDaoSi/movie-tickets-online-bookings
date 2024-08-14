@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.List;
 
 @EqualsAndHashCode( callSuper = false )
@@ -24,5 +22,5 @@ public class MovieEntity extends BaseEntity{
     String description;
 
     @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ShowtimeEntity> showtimes;
+    List<ShowtimeEntity> showtimes;
 }

@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @Table(name = "tickets")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class TicketEntity extends BaseEntity {
     private static final long serialVersionUID = 1L;

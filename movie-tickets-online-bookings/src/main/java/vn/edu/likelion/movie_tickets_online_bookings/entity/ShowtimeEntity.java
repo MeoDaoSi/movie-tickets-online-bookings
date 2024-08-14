@@ -19,7 +19,7 @@ public class ShowtimeEntity extends BaseEntity {
 
     @Column(name = "showtime_date", nullable = false)
     @NonNull
-    LocalDate showtime_date;
+    LocalDate showtimeDate;
 
     @Column(name = "start_time", nullable = false)
     @NonNull

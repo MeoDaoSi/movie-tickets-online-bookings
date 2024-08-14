@@ -22,6 +22,5 @@ public class SeatEntity extends BaseEntity {
     HallEntity hall;
 
     @OneToMany(mappedBy = "seat", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<TicketEntity> tickets;
-
+    List<TicketEntity> tickets;
 }

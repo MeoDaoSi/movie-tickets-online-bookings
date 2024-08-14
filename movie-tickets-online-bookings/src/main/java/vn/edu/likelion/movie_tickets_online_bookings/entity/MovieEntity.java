@@ -23,6 +23,6 @@ public class MovieEntity extends BaseEntity{
     @Column(name = "description")
     String description;
 
-    @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ShowtimeEntity> showtimes;
 }

@@ -18,10 +18,10 @@ public class SeatEntity extends BaseEntity {
     @NonNull
     String seatNumber;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     HallEntity hall;
 
-    @OneToMany(mappedBy = "seat")
+    @OneToMany(mappedBy = "seat", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<TicketEntity> tickets;
 
 }

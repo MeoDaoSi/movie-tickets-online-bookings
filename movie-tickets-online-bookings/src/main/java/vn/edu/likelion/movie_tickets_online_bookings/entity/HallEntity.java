@@ -15,12 +15,10 @@ import java.util.List;
 public class HallEntity extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "name", nullable = false, length = 255)
-    @NonNull
+    @Column(name = "name", nullable = false)
     String name;
 
     @Column(name = "capacity", nullable = false)
-    @NonNull
     int capacity;
 
     @OneToMany(mappedBy = "hall")
@@ -28,4 +26,5 @@ public class HallEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "hall")
     private List<ShowtimeEntity> showtimes;
+
 }

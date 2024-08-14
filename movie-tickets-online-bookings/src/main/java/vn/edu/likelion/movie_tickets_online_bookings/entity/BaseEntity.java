@@ -1,6 +1,5 @@
 package vn.edu.likelion.movie_tickets_online_bookings.entity;
 
-
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -13,7 +12,8 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BaseEntity {
+public abstract class BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;

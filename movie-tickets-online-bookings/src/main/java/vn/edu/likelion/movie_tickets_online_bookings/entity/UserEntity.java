@@ -3,49 +3,41 @@ package vn.edu.likelion.movie_tickets_online_bookings.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import vn.edu.likelion.movie_tickets_online_bookings.enums.Role;
 
 import java.util.List;
 
+@EqualsAndHashCode( callSuper = false )
 @Entity
-@Table(name = "User")
+@Table(name = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserEntity extends BaseEntity {
+
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "name", length = 255, nullable = false)
-    @NonNull
+    @Column( name = "name", nullable = false )
     String name;
 
-    @Column(name = "username", length = 255, unique = true, nullable = false)
-    @NonNull
+    @Column( name = "username", unique = true, nullable = false )
     String username;
 
-    @Column(name = "password", length = 60, nullable = false)
-    @NonNull
+    @Column( name = "password", nullable = false )
     String password;
 
-    @Column(name = "email", length = 255, unique = true, nullable = false)
-    @NonNull
+    @Column( name = "email", unique = true, nullable = false )
     String email;
 
-    @Column(name = "phone_number", length = 20, unique = true)
+    @Column( name = "phone_number", unique = true )
     String phoneNumber;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
     Role role;
 
-    public enum Role {
-        ADMIN, STAFF, CUSTOMER
-    }
-
-    @OneToMany(mappedBy = "user")
-    private List<TicketEntity> tickets;
-
-    @OneToMany(mappedBy = "staff")
-    private List<TicketEntity> managedTickets;
+    @OneToMany( mappedBy = "user", fetch = FetchType.EAGER )
+    List<TicketEntity> tickets;
 
 }

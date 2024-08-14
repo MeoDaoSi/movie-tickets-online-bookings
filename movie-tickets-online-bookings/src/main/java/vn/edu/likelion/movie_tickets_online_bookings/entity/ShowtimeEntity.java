@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+@EqualsAndHashCode( callSuper = false )
 @Entity
 @Table(name = "showtimes")
 @Data
@@ -17,35 +18,22 @@ import java.util.List;
 public class ShowtimeEntity extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "date", nullable = false)
-    @NonNull
-    LocalDate date;
+    @Column(name = "showtime_date", nullable = false)
+    LocalDate showtime_date;
 
     @Column(name = "start_time", nullable = false)
-    @NonNull
     LocalTime startTime;
 
     @Column(name = "end_time", nullable = false)
-    @NonNull
     LocalTime endTime;
 
-    @Column(name = "movie_id", nullable = false)
-    @NonNull
-    int movieId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    MovieEntity movie;
 
-    @Column(name = "hall_id", nullable = false)
-    @NonNull
-    int hallId;
-
-    @ManyToOne
-    @JoinColumn(name = "movie_id", referencedColumnName = "id")
-    private MovieEntity movie;
-
-    @ManyToOne
-    @JoinColumn(name = "hall_id", referencedColumnName = "id")
-    private HallEntity hall;
+    @ManyToOne(fetch = FetchType.EAGER)
+    HallEntity hall;
 
     @OneToMany(mappedBy = "showtime")
-    private List<TicketEntity> tickets;
+    List<TicketEntity> tickets;
 
 }

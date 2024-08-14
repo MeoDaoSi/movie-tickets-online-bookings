@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
+@EqualsAndHashCode( callSuper = false )
 @Entity
 @Table(name = "seats")
 @Data
@@ -15,17 +16,11 @@ import java.util.List;
 public class SeatEntity extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "seat_number", nullable = false, length = 10)
-    @NonNull
+    @Column(name = "seat_number", nullable = false)
     String seatNumber;
 
-    @Column(name = "hall_id", nullable = false)
-    @NonNull
-    int hallId;
-
-    @ManyToOne
-    @JoinColumn(name = "hall_id", referencedColumnName = "id")
-    private HallEntity hall;
+    @ManyToOne(fetch = FetchType.EAGER)
+    HallEntity hall;
 
     @OneToMany(mappedBy = "seat")
     private List<TicketEntity> tickets;

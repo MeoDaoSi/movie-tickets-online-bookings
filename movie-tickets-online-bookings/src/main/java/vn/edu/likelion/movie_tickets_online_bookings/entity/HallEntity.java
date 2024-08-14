@@ -10,15 +10,15 @@ import java.util.List;
 @Table(name = "halls")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class HallEntity extends BaseEntity {
-    private static final long serialVersionUID = 1L;
 
     @Column(name = "name", nullable = false)
+    @NonNull
     String name;
 
     @Column(name = "capacity", nullable = false)
+    @NonNull
     int capacity;
 
     @OneToMany(mappedBy = "hall")
@@ -26,5 +26,4 @@ public class HallEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "hall")
     private List<ShowtimeEntity> showtimes;
-
 }

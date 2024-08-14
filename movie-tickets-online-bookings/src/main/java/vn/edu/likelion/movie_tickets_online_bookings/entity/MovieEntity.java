@@ -13,13 +13,11 @@ import java.util.List;
 @Table(name = "movies")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class MovieEntity extends BaseEntity{
-    private static final long serialVersionUID = 1L;
 
     @Column(name = "name", nullable = false)
+    @NonNull
     String name;
 
     @Column(name = "description")
@@ -27,5 +25,4 @@ public class MovieEntity extends BaseEntity{
 
     @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
     private List<ShowtimeEntity> showtimes;
-
 }

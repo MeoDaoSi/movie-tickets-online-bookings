@@ -11,12 +11,11 @@ import java.util.List;
 @Table(name = "seats")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SeatEntity extends BaseEntity {
-    private static final long serialVersionUID = 1L;
 
-    @Column(name = "seat_number", nullable = false)
+    @Column(name = "seat_number", nullable = false, length = 10)
+    @NonNull
     String seatNumber;
 
     @ManyToOne(fetch = FetchType.EAGER)

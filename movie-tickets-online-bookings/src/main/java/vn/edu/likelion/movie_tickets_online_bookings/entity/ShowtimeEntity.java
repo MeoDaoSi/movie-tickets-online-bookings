@@ -13,18 +13,20 @@ import java.util.List;
 @Table(name = "showtimes")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ShowtimeEntity extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @Column(name = "showtime_date", nullable = false)
+    @NonNull
     LocalDate showtime_date;
 
     @Column(name = "start_time", nullable = false)
+    @NonNull
     LocalTime startTime;
 
     @Column(name = "end_time", nullable = false)
+    @NonNull
     LocalTime endTime;
 
     @ManyToOne(fetch = FetchType.EAGER)

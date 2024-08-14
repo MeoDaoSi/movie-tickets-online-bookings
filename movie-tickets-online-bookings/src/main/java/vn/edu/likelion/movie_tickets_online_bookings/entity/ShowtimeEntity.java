@@ -19,7 +19,7 @@ public class ShowtimeEntity extends BaseEntity {
 
     @Column(name = "showtime_date", nullable = false)
     @NonNull
-    LocalDate showtime_date;
+    LocalDate showtimeDate;
 
     @Column(name = "start_time", nullable = false)
     @NonNull
@@ -29,13 +29,13 @@ public class ShowtimeEntity extends BaseEntity {
     @NonNull
     LocalTime endTime;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     MovieEntity movie;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     HallEntity hall;
 
-    @OneToMany(mappedBy = "showtime")
+    @OneToMany(mappedBy = "showtime", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<TicketEntity> tickets;
 
 }

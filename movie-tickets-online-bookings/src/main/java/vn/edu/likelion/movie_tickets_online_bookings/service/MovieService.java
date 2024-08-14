@@ -1,4 +1,7 @@
 package vn.edu.likelion.movie_tickets_online_bookings.service;
 
-public interface MovieService {
+import vn.edu.likelion.movie_tickets_online_bookings.dto.request.UserRequest;
+import vn.edu.likelion.movie_tickets_online_bookings.dto.response.UserResponse;
+
+public interface MovieService  extends BaseService<UserRequest, UserResponse> {
 }

@@ -1,6 +1,7 @@
 package vn.edu.likelion.movie_tickets_online_bookings.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -15,7 +16,7 @@ import java.util.List;
 public class MovieEntity extends BaseEntity{
 
     @Column(name = "name", nullable = false)
-    @NonNull
+    @NotNull
     String name;
 
     @Column(name = "description")

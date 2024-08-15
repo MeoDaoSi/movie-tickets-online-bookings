@@ -1,6 +1,8 @@
 package vn.edu.likelion.movie_tickets_online_bookings.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import vn.edu.likelion.movie_tickets_online_bookings.entity.enums.Role;
@@ -18,15 +20,16 @@ import java.util.List;
 public class UserEntity extends BaseEntity {
 
     @Column(name = "name", nullable = false)
-    @NonNull
+    @NotNull
     String name;
 
     @Column(name = "password", length = 60, nullable = false)
-    @NonNull
+    @NotNull
     String password;
 
+    @Email(message = "Incorrect email")
     @Column(name = "email", unique = true, nullable = false)
-    @NonNull
+    @NotNull
     String email;
 
     @Column(name = "phone_number", unique = true)

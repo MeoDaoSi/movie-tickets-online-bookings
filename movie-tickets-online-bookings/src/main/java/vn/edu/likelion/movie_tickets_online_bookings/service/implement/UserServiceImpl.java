@@ -1,4 +1,4 @@
-package vn.edu.likelion.movie_tickets_online_bookings.service.impl;
+package vn.edu.likelion.movie_tickets_online_bookings.service.implement;
 
 
 import jakarta.transaction.Transactional;

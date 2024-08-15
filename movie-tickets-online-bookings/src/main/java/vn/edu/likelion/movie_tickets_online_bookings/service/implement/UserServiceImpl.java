@@ -1,4 +1,4 @@
-package vn.edu.likelion.movie_tickets_online_bookings.service.impl;
+package vn.edu.likelion.movie_tickets_online_bookings.service.implement;
 
 
 import jakarta.transaction.Transactional;
@@ -12,7 +12,7 @@ import vn.edu.likelion.movie_tickets_online_bookings.entity.UserEntity;
 import vn.edu.likelion.movie_tickets_online_bookings.entity.enums.Role;
 import vn.edu.likelion.movie_tickets_online_bookings.exception.UserException;
 import vn.edu.likelion.movie_tickets_online_bookings.mapper.UserMapper;
-import vn.edu.likelion.movie_tickets_online_bookings.repo.UserRepo;
+import vn.edu.likelion.movie_tickets_online_bookings.repository.UserRepo;
 import vn.edu.likelion.movie_tickets_online_bookings.service.UserService;
 
 import java.util.ArrayList;

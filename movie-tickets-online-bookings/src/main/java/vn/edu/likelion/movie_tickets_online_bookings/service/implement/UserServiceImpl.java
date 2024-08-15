@@ -4,6 +4,9 @@ package vn.edu.likelion.movie_tickets_online_bookings.service.implement;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.request.UserRequest;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.response.UserResponse;
@@ -47,7 +50,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Iterable<UserResponse> findAll(int pageNo, int pageSize, String sortBy, String sortDir) {
-        return null;
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+
+        return userRepo.findAll(pageable).getContent().stream()
+                .map(userMapper::toResponse).toList();
     }
 
     @Override

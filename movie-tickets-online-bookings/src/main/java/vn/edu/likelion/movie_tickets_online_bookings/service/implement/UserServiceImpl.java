@@ -4,6 +4,7 @@ package vn.edu.likelion.movie_tickets_online_bookings.service.implement;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.request.UserRequest;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.response.UserResponse;
 import vn.edu.likelion.movie_tickets_online_bookings.entity.UserEntity;
+
 import vn.edu.likelion.movie_tickets_online_bookings.exception.UserException;
 import vn.edu.likelion.movie_tickets_online_bookings.mapper.UserMapper;
 import vn.edu.likelion.movie_tickets_online_bookings.repository.UserRepo;
@@ -50,6 +52,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Iterable<UserResponse> findAll(int pageNo, int pageSize, String sortBy, String sortDir) {
+
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
@@ -60,6 +63,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse update(UserRequest userRequest) {
+
         UserEntity userEntity = userMapper.toEntity(userRequest);
         userRepo.save(userEntity);
 

@@ -1,6 +1,7 @@
 package vn.edu.likelion.movie_tickets_online_bookings.mapper;
 
 import javax.annotation.processing.Generated;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.request.UserRequest;
@@ -15,6 +16,7 @@ import vn.edu.likelion.movie_tickets_online_bookings.entity.enums.Role;
 )
 @Component
 public class UserMapperImpl implements UserMapper {
+
 
     @Autowired
     private PasswordEncoderMapper passwordEncoderMapper;

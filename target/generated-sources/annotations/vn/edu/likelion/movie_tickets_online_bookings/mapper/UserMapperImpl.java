@@ -1,7 +1,6 @@
 package vn.edu.likelion.movie_tickets_online_bookings.mapper;
 
 import javax.annotation.processing.Generated;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.request.UserRequest;
@@ -11,12 +10,11 @@ import vn.edu.likelion.movie_tickets_online_bookings.entity.enums.Role;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-08-15T11:46:19+0700",
+    date = "2024-08-16T09:56:33+0700",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.3 (Oracle Corporation)"
 )
 @Component
 public class UserMapperImpl implements UserMapper {
-
 
     @Autowired
     private PasswordEncoderMapper passwordEncoderMapper;

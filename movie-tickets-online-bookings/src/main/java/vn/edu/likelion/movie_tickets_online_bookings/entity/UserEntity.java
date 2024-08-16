@@ -20,16 +20,12 @@ import java.util.List;
 public class UserEntity extends BaseEntity {
 
     @Column(name = "name", nullable = false)
-    @NotNull
     String name;
 
     @Column(name = "password", length = 60, nullable = false)
-    @NotNull
     String password;
 
-    @Email(message = "Incorrect email")
     @Column(name = "email", unique = true, nullable = false)
-    @NotNull
     String email;
 
     @Column(name = "phone_number", unique = true)

@@ -4,18 +4,20 @@ package vn.edu.likelion.movie_tickets_online_bookings.service.implement;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.request.UserRequest;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.response.UserResponse;
 import vn.edu.likelion.movie_tickets_online_bookings.entity.UserEntity;
-import vn.edu.likelion.movie_tickets_online_bookings.entity.enums.Role;
+
 import vn.edu.likelion.movie_tickets_online_bookings.exception.UserException;
 import vn.edu.likelion.movie_tickets_online_bookings.mapper.UserMapper;
 import vn.edu.likelion.movie_tickets_online_bookings.repository.UserRepo;
 import vn.edu.likelion.movie_tickets_online_bookings.service.UserService;
 
-import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 @Service
@@ -27,8 +29,6 @@ public class UserServiceImpl implements UserService {
     private UserRepo userRepo;
     @Autowired
     private UserMapper userMapper;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserResponse create(UserRequest userRequest) {
@@ -42,22 +42,33 @@ public class UserServiceImpl implements UserService {
             throw new UserException("Invalid Password!");
         }
 
-        UserEntity userEntity = buildUserEntity(userRequest);
+        UserEntity userEntity = userMapper.toEntity(userRequest);
         userRepo.save(userEntity);
 
         log.info("Registration successfully");
-        return buildCustomerResponse(userEntity);
+        return userMapper.toResponse(userEntity);
 
     }
 
     @Override
     public Iterable<UserResponse> findAll(int pageNo, int pageSize, String sortBy, String sortDir) {
-        return null;
+
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+
+        return userRepo.findAll(pageable).getContent().stream()
+                .map(userMapper::toResponse).toList();
     }
 
     @Override
     public UserResponse update(UserRequest userRequest) {
-        return null;
+
+        UserEntity userEntity = userMapper.toEntity(userRequest);
+        userRepo.save(userEntity);
+
+        log.info("Update successfully");
+        return userMapper.toResponse(userEntity);
     }
 
     @Override
@@ -80,25 +91,5 @@ public class UserServiceImpl implements UserService {
             return false;
         String regex = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
         return Pattern.compile(regex).matcher(input).matches();
-    }
-
-    private UserEntity buildUserEntity(UserRequest userRequest) {
-        return UserEntity.builder()
-                .name(userRequest.getName())
-                .email(userRequest.getEmail()).password(passwordEncoder.encode(userRequest.getPassword()))
-                .phoneNumber(userRequest.getPhoneNumber())
-                .role(Role.USER)
-                .tickets(new ArrayList<>())
-                .build();
-    }
-
-    private UserResponse buildCustomerResponse(UserEntity userEntity) {
-        return UserResponse.builder()
-                .id(userEntity.getId())
-                .name(userEntity.getName())
-                .email(userEntity.getEmail())
-                .phone(userEntity.getPhoneNumber())
-                .createdAt(userEntity.getCreatedAt())
-                .build();
     }
 }

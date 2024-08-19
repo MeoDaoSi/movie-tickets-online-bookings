@@ -10,7 +10,7 @@ import vn.edu.likelion.movie_tickets_online_bookings.entity.MovieEntity;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-08-15T15:18:26+0700",
+    date = "2024-08-19T09:06:04+0700",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.3 (Oracle Corporation)"
 )
 @Component

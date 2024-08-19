@@ -1,6 +1,7 @@
 package vn.edu.likelion.movie_tickets_online_bookings.service.implement;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -8,12 +9,14 @@ import org.springframework.stereotype.Service;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.request.MovieRequestDTO;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.response.MovieResponseDTO;
 import vn.edu.likelion.movie_tickets_online_bookings.entity.MovieEntity;
+import vn.edu.likelion.movie_tickets_online_bookings.exception.ResourceAlreadyExistsException;
 import vn.edu.likelion.movie_tickets_online_bookings.exception.ResourceNotFoundException;
 import vn.edu.likelion.movie_tickets_online_bookings.mapper.MovieMapper;
 import vn.edu.likelion.movie_tickets_online_bookings.repository.MovieRepo;
 import vn.edu.likelion.movie_tickets_online_bookings.service.MovieService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +33,11 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public MovieResponseDTO create(MovieRequestDTO dto) {
+        // Check if the movie name already exists
+        if (movieRepository.findByName(dto.getName()).isPresent()) {
+            throw new ResourceAlreadyExistsException("A movie with the name '" + dto.getName() + "' already exists.");
+        }
+
         MovieEntity entity = movieMapper.toEntity(dto);
         MovieEntity savedEntity = movieRepository.save(entity);
         return movieMapper.toResponseDTO(savedEntity);
@@ -60,6 +68,12 @@ public class MovieServiceImpl implements MovieService {
     public MovieResponseDTO update(MovieRequestDTO dto, int id) {
         MovieEntity entity = movieRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Movie not found with id " + id));
+
+        // Check if the updated name is already taken by another movie
+        Optional<MovieEntity> existingMovie = movieRepository.findByName(dto.getName());
+        if (existingMovie.isPresent() && existingMovie.get().getId() != id) {
+            throw new ResourceAlreadyExistsException("A movie with the name '" + dto.getName() + "' already exists.");
+        }
 
         movieMapper.updateEntityFromDTO(dto, entity);
         MovieEntity updatedEntity = movieRepository.save(entity);

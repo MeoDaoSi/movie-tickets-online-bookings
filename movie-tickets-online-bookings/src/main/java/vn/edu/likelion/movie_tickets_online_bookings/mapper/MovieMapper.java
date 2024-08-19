@@ -1,7 +1,6 @@
 package vn.edu.likelion.movie_tickets_online_bookings.mapper;
 
 import org.mapstruct.*;
-import org.mapstruct.factory.Mappers;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.request.MovieRequestDTO;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.response.MovieResponseDTO;
 import vn.edu.likelion.movie_tickets_online_bookings.entity.MovieEntity;

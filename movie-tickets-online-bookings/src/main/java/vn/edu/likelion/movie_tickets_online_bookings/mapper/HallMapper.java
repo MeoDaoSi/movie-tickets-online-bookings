@@ -10,7 +10,7 @@ public interface HallMapper {
 
     HallEntity toEntity(HallRequestDTO dto);
 
-//    @Mapping(source = "createdAt", target = "createTime", dateFormat = "yyyy-MM-dd HH:mm:ss")
+    //    @Mapping(source = "createdAt", target = "createTime", dateFormat = "yyyy-MM-dd HH:mm:ss")
 //    @Mapping(source = "updatedAt", target = "updateTime", dateFormat = "yyyy-MM-dd HH:mm:ss")
     HallResponseDTO toResponseDTO(HallEntity entity);
 

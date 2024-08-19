@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface HallService extends BaseService<HallRequestDTO, HallResponseDTO> {
     List<HallResponseDTO> findAll(boolean statusInDBOfHall, int pageNo, int pageSize, String sortBy, String sortDir);
+
     HallResponseDTO update(HallRequestDTO dto, int id);
 }

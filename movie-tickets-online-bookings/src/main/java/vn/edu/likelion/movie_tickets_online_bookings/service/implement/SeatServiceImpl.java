@@ -8,8 +8,8 @@ import vn.edu.likelion.movie_tickets_online_bookings.entity.SeatEntity;
 import vn.edu.likelion.movie_tickets_online_bookings.exception.ResourceAlreadyExistsException;
 import vn.edu.likelion.movie_tickets_online_bookings.exception.ResourceNotFoundException;
 import vn.edu.likelion.movie_tickets_online_bookings.mapper.SeatMapper;
-import vn.edu.likelion.movie_tickets_online_bookings.repository.SeatRepo;
 import vn.edu.likelion.movie_tickets_online_bookings.repository.HallRepo;
+import vn.edu.likelion.movie_tickets_online_bookings.repository.SeatRepo;
 import vn.edu.likelion.movie_tickets_online_bookings.service.SeatService;
 
 import java.util.List;

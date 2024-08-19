@@ -11,6 +11,8 @@ import java.util.Optional;
 @Repository
 public interface HallRepo extends JpaRepository<HallEntity, Integer> {
     Optional<HallEntity> findByIdAndIsDeletedFalse(int id);
+
     Page<HallEntity> findAllByIsDeleted(Pageable pageable, boolean isDeleted);
+
     Optional<HallEntity> findByName(String name);
 }

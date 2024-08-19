@@ -1,15 +1,14 @@
 package vn.edu.likelion.movie_tickets_online_bookings.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import vn.edu.likelion.movie_tickets_online_bookings.entity.enums.Role;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@EqualsAndHashCode( callSuper = false )
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "users")
 @Data
@@ -34,6 +33,9 @@ public class UserEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     Role role;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Column( nullable = true )
+    int status;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     List<TicketEntity> tickets;
 }

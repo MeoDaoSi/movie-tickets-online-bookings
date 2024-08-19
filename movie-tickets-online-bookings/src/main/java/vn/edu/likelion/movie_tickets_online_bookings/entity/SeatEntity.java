@@ -2,12 +2,15 @@ package vn.edu.likelion.movie_tickets_online_bookings.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
-@EqualsAndHashCode( callSuper = false )
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "seats")
 @Data
@@ -21,7 +24,4 @@ public class SeatEntity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     HallEntity hall;
-
-    @OneToMany(mappedBy = "seat", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    List<TicketEntity> tickets;
 }

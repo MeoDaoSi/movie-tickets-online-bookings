@@ -23,6 +23,8 @@ public abstract class BaseEntity {
 
     @Column(insertable = false)
     LocalDateTime updatedAt;
+    @Column
+    boolean isDeleted = false;
 
     // Tự động tạo khi tạo dữ liệu
     @PrePersist
@@ -35,7 +37,4 @@ public abstract class BaseEntity {
     protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
-
-    @Column
-    boolean isDeleted = false;
 }

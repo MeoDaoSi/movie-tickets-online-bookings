@@ -12,7 +12,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UpdateRequest {
 
-    @NotNull @NotEmpty @NotBlank
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String field;
 
     @NotNull

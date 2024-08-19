@@ -11,7 +11,7 @@ import vn.edu.likelion.movie_tickets_online_bookings.entity.UserEntity;
 public interface UserMapper {
 
     @Mappings({
-            @Mapping(target = "role", constant = "USER"),
+            @Mapping(target = "role", constant = "ROLE_USER"),
             @Mapping(source = "password", target = "password", qualifiedBy = EncodedMapping.class),
     })
     UserEntity toEntity(UserRequest userRequest);

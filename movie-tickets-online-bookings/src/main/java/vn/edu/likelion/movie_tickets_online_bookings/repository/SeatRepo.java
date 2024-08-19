@@ -10,5 +10,6 @@ import java.util.Optional;
 @Repository
 public interface SeatRepo extends JpaRepository<SeatEntity, Integer> {
     Optional<SeatEntity> findBySeatNumberAndHall_Id(String seatNumber, int hallId);
+
     List<SeatEntity> findAllByHall_Id(int hallId);
 }

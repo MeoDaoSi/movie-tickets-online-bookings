@@ -10,7 +10,7 @@ public interface MovieMapper {
 
     MovieEntity toEntity(MovieRequestDTO dto);
 
-//    @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd HH:mm:ss")
+    //    @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd HH:mm:ss")
 //    @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy-MM-dd HH:mm:ss")
     MovieResponseDTO toResponseDTO(MovieEntity entity);
 

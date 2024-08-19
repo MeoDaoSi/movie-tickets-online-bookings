@@ -49,11 +49,11 @@ public class HallController {
     // Retrieve all halls with pagination and sorting
     @GetMapping("/findAll")
     public ResponseEntity<Map<String, Object>> getAllHalls(@Validated
-            @RequestParam(value = "status", required = false, defaultValue = "false") boolean statusInDBOfHall,
-            @RequestParam(value = "page", required = false, defaultValue = "0") int pageNo,
-            @RequestParam(value = "size", required = false, defaultValue = "10") int pageSize,
-            @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy,
-            @RequestParam(value = "sortDir", required = false, defaultValue = "asc") String sortDir) {
+                                                           @RequestParam(value = "status", required = false, defaultValue = "false") boolean statusInDBOfHall,
+                                                           @RequestParam(value = "page", required = false, defaultValue = "0") int pageNo,
+                                                           @RequestParam(value = "size", required = false, defaultValue = "10") int pageSize,
+                                                           @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy,
+                                                           @RequestParam(value = "sortDir", required = false, defaultValue = "asc") String sortDir) {
         List<HallResponseDTO> halls = hallService.findAll(statusInDBOfHall, pageNo, pageSize, sortBy, sortDir);
         return createResponse("success", halls, "Halls retrieved successfully.");
     }

@@ -8,8 +8,8 @@ import vn.edu.likelion.movie_tickets_online_bookings.dto.request.SeatRequestDTO;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.response.SeatResponseDTO;
 import vn.edu.likelion.movie_tickets_online_bookings.service.SeatService;
 
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController

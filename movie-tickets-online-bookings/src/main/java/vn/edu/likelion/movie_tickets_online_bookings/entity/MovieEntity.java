@@ -2,19 +2,22 @@ package vn.edu.likelion.movie_tickets_online_bookings.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@EqualsAndHashCode( callSuper = false )
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "movies")
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class MovieEntity extends BaseEntity{
+public class MovieEntity extends BaseEntity {
 
     @Column(name = "name", unique = true, nullable = false)
     @NotNull

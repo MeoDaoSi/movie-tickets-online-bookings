@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import vn.edu.likelion.movie_tickets_online_bookings.dto.request.LoginRequest;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.request.UserRequest;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.response.UserResponse;
 import vn.edu.likelion.movie_tickets_online_bookings.entity.UserEntity;
@@ -16,7 +17,6 @@ import vn.edu.likelion.movie_tickets_online_bookings.mapper.UserMapper;
 import vn.edu.likelion.movie_tickets_online_bookings.repository.UserRepo;
 import vn.edu.likelion.movie_tickets_online_bookings.service.UserService;
 
-import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 @Service

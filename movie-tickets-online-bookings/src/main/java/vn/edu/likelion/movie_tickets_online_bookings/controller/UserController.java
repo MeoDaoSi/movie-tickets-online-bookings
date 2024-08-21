@@ -10,7 +10,8 @@ import vn.edu.likelion.movie_tickets_online_bookings.service.UserService;
 import vn.edu.likelion.movie_tickets_online_bookings.utils.AppConstants;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
+@CrossOrigin("*")
 public class UserController {
 
     @Autowired

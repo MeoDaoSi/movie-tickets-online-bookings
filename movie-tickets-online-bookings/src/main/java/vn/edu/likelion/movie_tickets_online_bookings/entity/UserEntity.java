@@ -33,9 +33,5 @@ public class UserEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     Role role;
 
-    @Column( nullable = true )
     int status;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    List<TicketEntity> tickets;
 }

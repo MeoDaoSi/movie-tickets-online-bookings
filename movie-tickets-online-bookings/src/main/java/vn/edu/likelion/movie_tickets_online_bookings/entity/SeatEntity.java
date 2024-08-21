@@ -19,9 +19,8 @@ import java.util.List;
 public class SeatEntity extends BaseEntity {
 
     @Column(name = "seat_number", nullable = false, length = 10)
-    @NotNull
     String seatNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     HallEntity hall;
 }

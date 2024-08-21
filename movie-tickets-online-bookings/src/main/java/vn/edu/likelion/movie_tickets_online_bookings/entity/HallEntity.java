@@ -17,16 +17,8 @@ import java.util.List;
 public class HallEntity extends BaseEntity {
 
     @Column(name = "name", nullable = false)
-    @NotNull
     String name;
 
     @Column(name = "capacity", nullable = false)
-    @NotNull
     int capacity;
-
-    @OneToMany(mappedBy = "hall", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    List<SeatEntity> seats;
-
-    @OneToMany(mappedBy = "hall", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    List<ShowtimeEntity> showtimes;
 }

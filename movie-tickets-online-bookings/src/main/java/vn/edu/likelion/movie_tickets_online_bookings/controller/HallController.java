@@ -14,7 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/halls")
-@CrossOrigin
+@CrossOrigin("*")
 public class HallController {
 
     private final HallService hallService;

@@ -16,11 +16,4 @@ public interface MovieMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateEntityFromDTO(MovieRequestDTO dto, @MappingTarget MovieEntity entity);
-
-    @AfterMapping
-    default void linkShowtimes(@MappingTarget MovieEntity entity) {
-        if (entity.getShowtimes() != null) {
-            entity.getShowtimes().forEach(showtime -> showtime.setMovie(entity));
-        }
-    }
 }

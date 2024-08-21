@@ -26,13 +26,13 @@ public class TicketEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     TicketStatus status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     UserEntity user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     SeatEntity seat;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     ShowtimeEntity showtime;
 
     @ManyToOne(fetch = FetchType.LAZY)

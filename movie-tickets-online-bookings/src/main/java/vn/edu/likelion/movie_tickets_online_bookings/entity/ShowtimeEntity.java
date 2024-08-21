@@ -1,7 +1,7 @@
 package vn.edu.likelion.movie_tickets_online_bookings.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,24 +21,18 @@ import java.util.List;
 public class ShowtimeEntity extends BaseEntity {
 
     @Column(name = "showtime_date", nullable = false)
-    @NotNull
     LocalDate showtimeDate;
 
     @Column(name = "start_time", nullable = false)
-    @NotNull
     LocalTime startTime;
 
-    @Column(name = "end_time", nullable = false)
-    @NotNull
-    LocalTime endTime;
+    @Column(name = "duration", nullable = false)
+    int duration;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     MovieEntity movie;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     HallEntity hall;
-
-    @OneToMany(mappedBy = "showtime", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    List<TicketEntity> tickets;
 
 }

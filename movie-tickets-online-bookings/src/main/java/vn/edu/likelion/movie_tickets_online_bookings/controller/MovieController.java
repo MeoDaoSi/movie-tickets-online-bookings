@@ -14,7 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/movies")
-@CrossOrigin
+@CrossOrigin("*")
 public class MovieController {
 
     private final MovieService movieService;

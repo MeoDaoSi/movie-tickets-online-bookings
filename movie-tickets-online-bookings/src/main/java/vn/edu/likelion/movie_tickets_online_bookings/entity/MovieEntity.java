@@ -20,7 +20,6 @@ import java.util.List;
 public class MovieEntity extends BaseEntity {
 
     @Column(name = "name", unique = true, nullable = false)
-    @NotNull
     String name;
 
     @Column(name = "description")
@@ -42,7 +41,4 @@ public class MovieEntity extends BaseEntity {
 
     @Column(name = "rating")
     Double rating;
-
-    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    List<ShowtimeEntity> showtimes;
 }

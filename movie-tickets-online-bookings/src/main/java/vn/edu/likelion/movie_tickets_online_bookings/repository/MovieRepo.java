@@ -15,4 +15,6 @@ public interface MovieRepo extends JpaRepository<MovieEntity, Integer> {
     Page<MovieEntity> findAllByIsDeleted(Pageable pageable, boolean isDeleted);
 
     Optional<MovieEntity> findByName(String name);
+
+    Optional<MovieEntity> findById(int id);
 }

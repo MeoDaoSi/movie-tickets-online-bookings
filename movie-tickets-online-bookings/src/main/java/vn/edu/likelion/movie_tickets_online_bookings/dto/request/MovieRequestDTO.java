@@ -3,6 +3,7 @@ package vn.edu.likelion.movie_tickets_online_bookings.dto.request;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -19,7 +20,7 @@ public class MovieRequestDTO implements Serializable {
 
     private LocalDate releaseDate;
 
-    private List<String> cast;
+    private String cast;
 
     private String trailer;
 

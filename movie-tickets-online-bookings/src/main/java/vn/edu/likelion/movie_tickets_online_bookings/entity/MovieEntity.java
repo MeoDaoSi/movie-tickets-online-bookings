@@ -8,13 +8,13 @@ import lombok.experimental.FieldDefaults;
 import java.time.LocalDate;
 import java.util.List;
 
-@EqualsAndHashCode( callSuper = false )
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "movies")
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class MovieEntity extends BaseEntity{
+public class MovieEntity extends BaseEntity {
 
     @Column(name = "name", unique = true, nullable = false)
     @NotNull
@@ -26,10 +26,8 @@ public class MovieEntity extends BaseEntity{
     @Column(name = "release_date")
     LocalDate releaseDate;
 
-    @ElementCollection
-    @CollectionTable(name = "movie_cast", joinColumns = @JoinColumn(name = "movie_id"))
-    @Column(name = "cast_member")
-    List<String> cast;
+    @Column(name = "cast", nullable = false)
+    String cast; // Changed from List<String> to String
 
     @Column(name = "trailer_url")
     String trailer;

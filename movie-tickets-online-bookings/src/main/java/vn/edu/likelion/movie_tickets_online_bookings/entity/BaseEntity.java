@@ -37,5 +37,5 @@ public abstract class BaseEntity {
     }
 
     @Column
-    boolean isDeleted = false;
+    boolean deleted = false;
 }

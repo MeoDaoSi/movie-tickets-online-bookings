@@ -33,41 +33,41 @@ public class HallController {
     }
 
     // Create a new hall
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<Map<String, Object>> createHall(@Validated @RequestBody HallRequestDTO hallRequestDTO) {
         HallResponseDTO createdHall = hallService.create(hallRequestDTO);
         return createResponse("success", createdHall, "Hall created successfully.");
     }
 
     // Retrieve a specific hall by ID
-    @GetMapping("/findById/{id}")
-    public ResponseEntity<Map<String, Object>> getHallById(@Validated @PathVariable int id) {
+    @GetMapping("/id")
+    public ResponseEntity<Map<String, Object>> getHallById(@Validated @RequestParam int id) {
         HallResponseDTO hall = hallService.findById(id);
         return createResponse("success", hall, "Hall retrieved successfully.");
     }
 
     // Retrieve all halls with pagination and sorting
-    @GetMapping("/findAll")
+    @GetMapping
     public ResponseEntity<Map<String, Object>> getAllHalls(@Validated
-            @RequestParam(value = "status", required = false, defaultValue = "false") boolean statusInDBOfHall,
-            @RequestParam(value = "page", required = false, defaultValue = "0") int pageNo,
-            @RequestParam(value = "size", required = false, defaultValue = "10") int pageSize,
-            @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy,
-            @RequestParam(value = "sortDir", required = false, defaultValue = "asc") String sortDir) {
+                                                           @RequestParam(value = "status", required = false, defaultValue = "false") boolean statusInDBOfHall,
+                                                           @RequestParam(value = "page", required = false, defaultValue = "0") int pageNo,
+                                                           @RequestParam(value = "size", required = false, defaultValue = "10") int pageSize,
+                                                           @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy,
+                                                           @RequestParam(value = "sortDir", required = false, defaultValue = "asc") String sortDir) {
         List<HallResponseDTO> halls = hallService.findAll(statusInDBOfHall, pageNo, pageSize, sortBy, sortDir);
         return createResponse("success", halls, "Halls retrieved successfully.");
     }
 
     // Update an existing hall
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Map<String, Object>> updateHall(@Validated @PathVariable int id, @RequestBody HallRequestDTO hallRequestDTO) {
+    @PutMapping
+    public ResponseEntity<Map<String, Object>> updateHall(@Validated @RequestParam int id, @Validated @RequestBody HallRequestDTO hallRequestDTO) {
         HallResponseDTO updatedHall = hallService.update(hallRequestDTO, id);
         return createResponse("success", updatedHall, "Hall updated successfully.");
     }
 
     // Soft delete a hall by ID
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Map<String, Object>> deleteHall(@Validated @PathVariable int id) {
+    @DeleteMapping
+    public ResponseEntity<Map<String, Object>> deleteHall(@Validated @RequestParam int id) {
         hallService.delete(id);
         return createResponse("success", null, "Hall deleted successfully.");
     }

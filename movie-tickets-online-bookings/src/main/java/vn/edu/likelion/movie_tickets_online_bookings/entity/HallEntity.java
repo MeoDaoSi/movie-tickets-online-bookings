@@ -21,10 +21,4 @@ public class HallEntity extends BaseEntity {
     @Column(name = "capacity", nullable = false)
     @NotNull
     int capacity;
-
-    @OneToMany(mappedBy = "hall", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    List<SeatEntity> seats;
-
-    @OneToMany(mappedBy = "hall", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    List<ShowtimeEntity> showtimes;
 }

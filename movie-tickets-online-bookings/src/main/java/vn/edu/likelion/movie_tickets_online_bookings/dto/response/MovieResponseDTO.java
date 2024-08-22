@@ -2,6 +2,7 @@ package vn.edu.likelion.movie_tickets_online_bookings.dto.response;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,7 +19,7 @@ public class MovieResponseDTO {
 
     private LocalDate releaseDate;
 
-    private List<String> cast;
+    private String cast;
 
     private String trailer;
 

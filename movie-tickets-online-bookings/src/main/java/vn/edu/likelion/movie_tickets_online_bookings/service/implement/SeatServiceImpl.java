@@ -8,8 +8,8 @@ import vn.edu.likelion.movie_tickets_online_bookings.entity.SeatEntity;
 import vn.edu.likelion.movie_tickets_online_bookings.exception.ResourceAlreadyExistsException;
 import vn.edu.likelion.movie_tickets_online_bookings.exception.ResourceNotFoundException;
 import vn.edu.likelion.movie_tickets_online_bookings.mapper.SeatMapper;
-import vn.edu.likelion.movie_tickets_online_bookings.repository.HallRepo;
 import vn.edu.likelion.movie_tickets_online_bookings.repository.SeatRepo;
+import vn.edu.likelion.movie_tickets_online_bookings.repository.HallRepo;
 import vn.edu.likelion.movie_tickets_online_bookings.service.SeatService;
 
 import java.util.List;
@@ -33,7 +33,7 @@ public class SeatServiceImpl implements SeatService {
     @Override
     public SeatResponseDTO create(SeatRequestDTO dto) {
         // Check if the seat number already exists in the hall
-        if (seatRepository.findBySeatNumberAndHall_Id(dto.getSeatNumber(), dto.getHallId()).isPresent()) {
+        if (seatRepository.findBySeatNumberAndHallId(dto.getSeatNumber(), dto.getHallId()).isPresent()) {
             throw new ResourceAlreadyExistsException("A seat with the number '" + dto.getSeatNumber() + "' already exists in the hall.");
         }
 
@@ -58,7 +58,7 @@ public class SeatServiceImpl implements SeatService {
                 .orElseThrow(() -> new ResourceNotFoundException("Seat not found with id " + id));
 
         // Check if the updated seat number is already taken by another seat in the same hall
-        Optional<SeatEntity> existingSeat = seatRepository.findBySeatNumberAndHall_Id(dto.getSeatNumber(), dto.getHallId());
+        Optional<SeatEntity> existingSeat = seatRepository.findBySeatNumberAndHallId(dto.getSeatNumber(), dto.getHallId());
         if (existingSeat.isPresent() && existingSeat.get().getId() != id) {
             throw new ResourceAlreadyExistsException("A seat with the number '" + dto.getSeatNumber() + "' already exists in the hall.");
         }
@@ -84,7 +84,7 @@ public class SeatServiceImpl implements SeatService {
 
     @Override
     public List<SeatResponseDTO> findAllByHall(int hallId) {  // New method implementation
-        return seatRepository.findAllByHall_Id(hallId)
+        return seatRepository.findAllByHallId(hallId)
                 .stream()
                 .map(seatMapper::toResponseDTO)
                 .collect(Collectors.toList());

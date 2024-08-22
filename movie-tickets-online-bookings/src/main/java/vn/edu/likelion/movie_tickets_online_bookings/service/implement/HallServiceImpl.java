@@ -32,7 +32,7 @@ public class HallServiceImpl implements HallService {
 
     @Override
     public HallResponseDTO create(HallRequestDTO dto) {
-        if (hallRepository.findByName(dto.getName()).isPresent()) {
+        if (hallRepository.findByNameAndDeletedIsFalse(dto.getName()).isPresent()) {
             throw new ResourceAlreadyExistsException("A hall with the name '" + dto.getName() + "' already exists.");
         }
 
@@ -49,7 +49,7 @@ public class HallServiceImpl implements HallService {
     @Override
     public List<HallResponseDTO> findAll(boolean statusInDBOfHall, int pageNo, int pageSize, String sortBy, String sortDir) {
         PageRequest pageRequest = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.fromString(sortDir), sortBy));
-        Page<HallEntity> pagedResult = hallRepository.findAllByIsDeleted(pageRequest, statusInDBOfHall);
+        Page<HallEntity> pagedResult = hallRepository.findAllByDeleted(pageRequest, statusInDBOfHall);
 
         return pagedResult
                 .stream()
@@ -68,7 +68,7 @@ public class HallServiceImpl implements HallService {
                 .orElseThrow(() -> new ResourceNotFoundException("Hall not found with id " + id));
 
         // Check if the updated name is already taken by another hall
-        Optional<HallEntity> existingHall = hallRepository.findByName(dto.getName());
+        Optional<HallEntity> existingHall = hallRepository.findByNameAndDeletedIsFalse(dto.getName());
         if (existingHall.isPresent() && existingHall.get().getId() != id) {
             throw new ResourceAlreadyExistsException("A hall with the name '" + dto.getName() + "' already exists.");
         }
@@ -88,7 +88,7 @@ public class HallServiceImpl implements HallService {
 
     @Override
     public HallResponseDTO findById(int id) {
-        HallEntity entity = hallRepository.findByIdAndIsDeletedFalse(id)
+        HallEntity entity = hallRepository.findByIdAndDeletedIsFalse(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Hall not found with id " + id));
         return hallMapper.toResponseDTO(entity);
     }

@@ -10,11 +10,8 @@ import java.util.Optional;
 
 @Repository
 public interface MovieRepo extends JpaRepository<MovieEntity, Integer> {
-    Optional<MovieEntity> findByIdAndIsDeletedFalse(int id);
-
-    Page<MovieEntity> findAllByIsDeleted(Pageable pageable, boolean isDeleted);
-
-    Optional<MovieEntity> findByName(String name);
-
+    Optional<MovieEntity> findByIdAndDeletedIsFalse(int id);
+    Page<MovieEntity> findAllByDeleted(Pageable pageable, boolean isDeleted);
+    Optional<MovieEntity> findByNameAndDeletedIsFalse(String name);
     Optional<MovieEntity> findById(int id);
 }

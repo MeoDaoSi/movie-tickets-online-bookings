@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -19,7 +18,7 @@ public class MovieRequestDTO implements Serializable {
 
     private LocalDate releaseDate;
 
-    private List<String> cast;
+    private String cast;
 
     private String trailer;
 

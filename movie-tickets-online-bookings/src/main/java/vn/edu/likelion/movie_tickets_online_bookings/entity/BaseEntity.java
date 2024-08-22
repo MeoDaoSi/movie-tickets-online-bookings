@@ -23,8 +23,9 @@ public abstract class BaseEntity {
 
     @Column(insertable = false)
     LocalDateTime updatedAt;
+
     @Column
-    boolean isDeleted = false;
+    boolean deleted = false;
 
     // Tự động tạo khi tạo dữ liệu
     @PrePersist

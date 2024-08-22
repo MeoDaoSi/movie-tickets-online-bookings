@@ -28,10 +28,8 @@ public class MovieEntity extends BaseEntity {
     @Column(name = "release_date")
     LocalDate releaseDate;
 
-    @ElementCollection
-    @CollectionTable(name = "movie_cast", joinColumns = @JoinColumn(name = "movie_id"))
-    @Column(name = "cast_member")
-    List<String> cast;
+    @Column(name = "cast", nullable = false)
+    String cast;
 
     @Column(name = "trailer_url")
     String trailer;

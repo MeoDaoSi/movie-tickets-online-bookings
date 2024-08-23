@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.request.LoginRequest;
+import vn.edu.likelion.movie_tickets_online_bookings.dto.request.UpdatePasswordRequest;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.request.UserRequest;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.response.UserResponse;
 import vn.edu.likelion.movie_tickets_online_bookings.entity.UserEntity;
@@ -28,6 +30,8 @@ public class UserServiceImpl implements UserService {
     private UserRepo userRepo;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserResponse create(UserRequest userRequest) {
@@ -78,7 +82,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse findById(int id) {
-        return null;
+        UserEntity userEntity = userRepo.findById(id).orElseThrow(
+                () -> new UserException("User Not Found ...!")
+        );
+        return userMapper.toResponse(userEntity);
+    }
+
+    @Override
+    public UserResponse findByEmail(String email) {
+        UserEntity userEntity = userRepo.findByEmail(email).orElseThrow(
+                () -> new UserException("Invalid Email ...!")
+        );
+        return userMapper.toResponse(userEntity);
+    }
+
+    @Override
+    public String updatePassword(String email, UpdatePasswordRequest updatePasswordRequest) {
+        int in = userRepo.updatePasswordByEmail(email, passwordEncoder.encode(updatePasswordRequest.getNewPassword()));
+        System.out.println(in + "=========test");
+        return "Update Password Successfully ...!";
     }
 
     // custom validation

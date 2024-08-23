@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.request.LoginRequest;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.response.TokenResponse;
 import vn.edu.likelion.movie_tickets_online_bookings.service.AuthService;
+import vn.edu.likelion.movie_tickets_online_bookings.utils.ErrorDetails;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -18,10 +19,17 @@ public class AuthController {
     @Autowired
     AuthService authService;
 
-    @PostMapping
-    private ResponseEntity<TokenResponse> userLogin(@RequestBody LoginRequest loginRequest){
+    @PostMapping("/users/login")
+    private ResponseEntity<?> userLogin(@RequestBody LoginRequest loginRequest){
         TokenResponse tokenResponse = new TokenResponse();
-        tokenResponse.setToken(authService.login(loginRequest));
+        tokenResponse.setToken(authService.userLogin(loginRequest));
+        return new ResponseEntity<>(tokenResponse, HttpStatus.OK );
+    }
+
+    @PostMapping("/admins/login")
+    private ResponseEntity<?> adminLogin(@RequestBody LoginRequest loginRequest){
+        TokenResponse tokenResponse = new TokenResponse();
+        tokenResponse.setToken(authService.adminLogin(loginRequest));
         return new ResponseEntity<>(tokenResponse, HttpStatus.OK );
     }
 }

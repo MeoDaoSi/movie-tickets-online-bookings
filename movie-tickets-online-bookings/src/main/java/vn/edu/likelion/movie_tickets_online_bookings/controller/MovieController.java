@@ -39,12 +39,13 @@ public class MovieController {
     // Create a new movie
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Map<String, Object>> createMovie(
+            @Validated
             @RequestParam("name") String name,
             @RequestParam("description") String description,
             @RequestParam("releaseDate") String releaseDate,
             @RequestParam("rating") Double rating,
             @RequestParam("trailer") String trailer,
-            @RequestParam("image") MultipartFile image,
+            @RequestParam(value = "image", required = false) MultipartFile image,
             @RequestParam("cast") String cast) {
 
         MovieRequestDTO movieRequestDTO = new MovieRequestDTO();
@@ -69,8 +70,8 @@ public class MovieController {
     // Retrieve a specific movie by title
     @GetMapping("/title")
     public ResponseEntity<Map<String, Object>> getMovieByTitle(@Validated @RequestParam String title) {
-        MovieResponseDTO movie = movieService.findByName(title);
-        return createResponse("success", movie, "Movie retrieved successfully.");
+        List<MovieResponseDTO> movies = movieService.findByName(title);
+        return createResponse("success", movies, "Movies retrieved successfully.");
     }
 
     // Retrieve all movies with pagination, sorting, and deleted status filtering

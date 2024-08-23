@@ -117,9 +117,12 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public MovieResponseDTO findByName(String name) {
-        MovieEntity entity = movieRepository.findByNameAndDeletedIsFalse(name)
-                .orElseThrow(() -> new ResourceNotFoundException("Movie not found with name " + name));
-        return movieMapper.toResponseDTO(entity);
+    public List<MovieResponseDTO> findByName(String name) {
+        List<MovieEntity> entities = movieRepository.findAllByNameContainingIgnoreCaseAndDeletedIsFalse(name);
+        if (entities.isEmpty()) {
+            throw new ResourceNotFoundException("No movies found with name containing '" + name + "'");
+        }
+        return entities.stream().map(movieMapper::toResponseDTO).collect(Collectors.toList());
     }
+
 }

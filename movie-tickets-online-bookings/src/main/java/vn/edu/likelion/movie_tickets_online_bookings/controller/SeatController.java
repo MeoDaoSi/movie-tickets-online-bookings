@@ -8,13 +8,12 @@ import vn.edu.likelion.movie_tickets_online_bookings.dto.request.SeatRequestDTO;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.response.SeatResponseDTO;
 import vn.edu.likelion.movie_tickets_online_bookings.service.SeatService;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/seats")
-@CrossOrigin("*")
 public class SeatController {
 
     private final SeatService seatService;
@@ -33,43 +32,43 @@ public class SeatController {
     }
 
     // Create a new seat
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<Map<String, Object>> createSeat(@Validated @RequestBody SeatRequestDTO seatRequestDTO) {
         SeatResponseDTO createdSeat = seatService.create(seatRequestDTO);
         return createResponse("success", createdSeat, "Seat created successfully.");
     }
 
     // Retrieve a specific seat by ID
-    @GetMapping("/findById/{id}")
-    public ResponseEntity<Map<String, Object>> getSeatById(@Validated @PathVariable int id) {
+    @GetMapping("/id")
+    public ResponseEntity<Map<String, Object>> getSeatById(@Validated @RequestParam int id) {
         SeatResponseDTO seat = seatService.findById(id);
         return createResponse("success", seat, "Seat retrieved successfully.");
     }
 
     // Retrieve all seats
-    @GetMapping("/findAll")
+    @GetMapping
     public ResponseEntity<Map<String, Object>> getAllSeats() {
         List<SeatResponseDTO> seats = seatService.findAll();
         return createResponse("success", seats, "Seats retrieved successfully.");
     }
 
     // Update an existing seat
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Map<String, Object>> updateSeat(@Validated @PathVariable int id, @RequestBody SeatRequestDTO seatRequestDTO) {
+    @PutMapping
+    public ResponseEntity<Map<String, Object>> updateSeat(@Validated @RequestParam int id, @Validated @RequestBody SeatRequestDTO seatRequestDTO) {
         SeatResponseDTO updatedSeat = seatService.update(seatRequestDTO, id);
         return createResponse("success", updatedSeat, "Seat updated successfully.");
     }
 
     // Delete a seat by ID
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Map<String, Object>> deleteSeat(@Validated @PathVariable int id) {
+    @DeleteMapping
+    public ResponseEntity<Map<String, Object>> deleteSeat(@Validated @RequestParam int id) {
         seatService.delete(id);
         return createResponse("success", null, "Seat deleted successfully.");
     }
 
     // Retrieve all seats by hall ID
-    @GetMapping("/findByHall/{hallId}")
-    public ResponseEntity<Map<String, Object>> getAllSeatsByHall(@Validated @PathVariable int hallId) {
+    @GetMapping("/hall")
+    public ResponseEntity<Map<String, Object>> getAllSeatsByHall(@Validated @RequestParam int hallId) {
         List<SeatResponseDTO> seats = seatService.findAllByHall(hallId);
         return createResponse("success", seats, "Seats retrieved successfully.");
     }

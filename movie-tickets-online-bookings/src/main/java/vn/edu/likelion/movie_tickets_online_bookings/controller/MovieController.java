@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.request.MovieRequestDTO;
+import vn.edu.likelion.movie_tickets_online_bookings.dto.response.MovieListResponseDTO;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.response.MovieResponseDTO;
 import vn.edu.likelion.movie_tickets_online_bookings.service.MovieService;
 
@@ -45,7 +46,8 @@ public class MovieController {
             @RequestParam("releaseDate") String releaseDate,
             @RequestParam("rating") Double rating,
             @RequestParam("trailer") String trailer,
-            @RequestParam(value = "image", required = false) MultipartFile image,
+            @RequestParam(value = "posterImage", required = false) MultipartFile posterImage,
+            @RequestParam(value = "bannerImage", required = false) MultipartFile bannerImage,
             @RequestParam("cast") String cast) {
 
         MovieRequestDTO movieRequestDTO = new MovieRequestDTO();
@@ -56,7 +58,7 @@ public class MovieController {
         movieRequestDTO.setTrailer(trailer);
         movieRequestDTO.setCast(cast);
 
-        MovieResponseDTO createdMovie = movieService.create(movieRequestDTO, image);
+        MovieResponseDTO createdMovie = movieService.create(movieRequestDTO, posterImage, bannerImage);
         return createResponse("success", createdMovie, "Movie created successfully.");
     }
 
@@ -74,31 +76,43 @@ public class MovieController {
         return createResponse("success", movies, "Movies retrieved successfully.");
     }
 
-    // Retrieve all movies with pagination, sorting, and deleted status filtering
+    // New endpoint for finding all movies without pagination
     @GetMapping
-    public ResponseEntity<Map<String, Object>> getAllMovies(@Validated
-                                                            @RequestParam(value = "status", required = false, defaultValue = "false") boolean statusInDBOfMovie,
-                                                            @RequestParam(value = "page", required = false, defaultValue = "0") int pageNo,
-                                                            @RequestParam(value = "size", required = false, defaultValue = "10") int pageSize,
-                                                            @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy,
-                                                            @RequestParam(value = "sortDir", required = false, defaultValue = "asc") String sortDir) {
-        List<MovieResponseDTO> movies = movieService.findAll(statusInDBOfMovie, pageNo, pageSize, sortBy, sortDir);
+    public ResponseEntity<Map<String, Object>> getAllMovie(@Validated @RequestParam(value = "status", required = false, defaultValue = "false") boolean statusInDBOfMovie,
+                                                           @Validated @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy,
+                                                           @Validated @RequestParam(value = "sortDir", required = false, defaultValue = "asc") String sortDir) {
+        MovieListResponseDTO movies = movieService.findAll(statusInDBOfMovie, sortBy, sortDir);
         return createResponse("success", movies, "Movies retrieved successfully.");
     }
 
     // Update an existing movie
-    @PutMapping
-    public ResponseEntity<Map<String, Object>> updateMovie(@Validated @RequestParam int id,
-                                                           @Validated @RequestBody MovieRequestDTO dto,
-                                                           @RequestParam(value = "image", required = false) MultipartFile imageFile) {
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Map<String, Object>> updateMovie(
+            @RequestParam int id,
+            @Validated @RequestParam("name") String name,
+            @RequestParam("description") String description,
+            @RequestParam("releaseDate") String releaseDate,
+            @RequestParam("rating") Double rating,
+            @RequestParam("trailer") String trailer,
+            @RequestParam(value = "posterImage", required = false) MultipartFile posterImage,
+            @RequestParam(value = "bannerImage", required = false) MultipartFile bannerImage,
+            @RequestParam("cast") String cast) {
+
+        MovieRequestDTO movieRequestDTO = new MovieRequestDTO();
+        movieRequestDTO.setName(name);
+        movieRequestDTO.setDescription(description);
+        movieRequestDTO.setReleaseDate(LocalDate.parse(releaseDate));
+        movieRequestDTO.setRating(rating);
+        movieRequestDTO.setTrailer(trailer);
+        movieRequestDTO.setCast(cast);
+
         try {
-            MovieResponseDTO updatedMovie = movieService.update(dto, id, imageFile);
+            MovieResponseDTO updatedMovie = movieService.update(movieRequestDTO, id, posterImage, bannerImage);
             return createResponse("success", updatedMovie, "Movie updated successfully.");
         } catch (IOException e) {
             return createResponse("error", null, "Failed to upload image. Please try again.");
         }
     }
-
 
     // Soft delete a movie by ID
     @DeleteMapping

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.request.SeatRequestDTO;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.response.SeatResponseDTO;
+import vn.edu.likelion.movie_tickets_online_bookings.entity.HallEntity;
 import vn.edu.likelion.movie_tickets_online_bookings.entity.SeatEntity;
 import vn.edu.likelion.movie_tickets_online_bookings.exception.ResourceAlreadyExistsException;
 import vn.edu.likelion.movie_tickets_online_bookings.exception.ResourceNotFoundException;
@@ -52,8 +53,25 @@ public class SeatServiceImpl implements SeatService {
                 .collect(Collectors.toList());
     }
 
+//    @Override
+//    public SeatResponseDTO update(SeatRequestDTO dto, int id) {
+//        SeatEntity entity = seatRepository.findById(id)
+//                .orElseThrow(() -> new ResourceNotFoundException("Seat not found with id " + id));
+//
+//        // Check if the updated seat number is already taken by another seat in the same hall
+//        Optional<SeatEntity> existingSeat = seatRepository.findBySeatNumberAndHallId(dto.getSeatNumber(), dto.getHallId());
+//        if (existingSeat.isPresent() && existingSeat.get().getId() != id) {
+//            throw new ResourceAlreadyExistsException("A seat with the number '" + dto.getSeatNumber() + "' already exists in the hall.");
+//        }
+//
+//        seatMapper.updateEntityFromDTO(dto, entity);
+//        SeatEntity updatedEntity = seatRepository.save(entity);
+//        return seatMapper.toResponseDTO(updatedEntity);
+//    }
+
     @Override
     public SeatResponseDTO update(SeatRequestDTO dto, int id) {
+        // Fetch the existing SeatEntity by ID
         SeatEntity entity = seatRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Seat not found with id " + id));
 
@@ -63,8 +81,20 @@ public class SeatServiceImpl implements SeatService {
             throw new ResourceAlreadyExistsException("A seat with the number '" + dto.getSeatNumber() + "' already exists in the hall.");
         }
 
+        // Find the new HallEntity based on the provided hallId
+        HallEntity newHall = hallRepository.findById(dto.getHallId())
+                .orElseThrow(() -> new ResourceNotFoundException("Hall not found with id " + dto.getHallId()));
+
+        // Update the HallEntity reference
+        entity.setHall(newHall);
+
+        // Update other fields in the SeatEntity
         seatMapper.updateEntityFromDTO(dto, entity);
+
+        // Save the updated SeatEntity
         SeatEntity updatedEntity = seatRepository.save(entity);
+
+        // Return the updated DTO
         return seatMapper.toResponseDTO(updatedEntity);
     }
 

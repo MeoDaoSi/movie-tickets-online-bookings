@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @EqualsAndHashCode(callSuper = false)
 @Entity
@@ -34,8 +33,11 @@ public class MovieEntity extends BaseEntity {
     @Column(name = "trailer_url")
     String trailer;
 
-    @Column(name = "image_url")
-    String imageUrl;
+    @Column(name = "poster_image_url")
+    String posterImageUrl;
+
+    @Column(name = "banner_image_url")  
+    String bannerImageUrl;
 
     @Column(name = "rating")
     Double rating;

@@ -33,7 +33,7 @@ public class ShowtimeServiceImpl implements ShowtimeService {
 
         System.out.println("Test ======== " + showtimeRequest);
 
-        Optional<MovieEntity> movieEntity = movieRepo.findById(movie_id);
+        Optional<MovieEntity> movieEntity = movieRepo.findByIdAndDeletedIsFalse(movie_id);
         System.out.println(movieEntity + " movieEntity");
         System.out.println(showtimeRequest.getHall_id() + "================");
         int hall_id = showtimeRequest.getHall_id();

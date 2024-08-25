@@ -22,7 +22,9 @@ public class MovieRequestDTO implements Serializable {
 
     private String trailer;
 
-    private String imageUrl;
+    private String posterImageUrl;
+
+    private String bannerImageUrl;
 
     private Double rating;
 }

@@ -1,12 +1,11 @@
 package vn.edu.likelion.movie_tickets_online_bookings.service.implement;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.request.MovieRequestDTO;
+import vn.edu.likelion.movie_tickets_online_bookings.dto.response.MovieListResponseDTO;
 import vn.edu.likelion.movie_tickets_online_bookings.dto.response.MovieResponseDTO;
 import vn.edu.likelion.movie_tickets_online_bookings.entity.MovieEntity;
 import vn.edu.likelion.movie_tickets_online_bookings.exception.ResourceAlreadyExistsException;
@@ -36,15 +35,22 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public MovieResponseDTO create(MovieRequestDTO dto, MultipartFile imageFile) {
+    public MovieResponseDTO create(MovieRequestDTO dto, MultipartFile posterImageFile, MultipartFile bannerImageFile) {
         // Check if the movie name already exists
         if (movieRepository.findByNameAndDeletedIsFalse(dto.getName()).isPresent()) {
             throw new ResourceAlreadyExistsException("A movie with the name '" + dto.getName() + "' already exists.");
         }
 
-        // Upload the image to Cloudinary and get the URL
-        String imageUrl = cloudinaryService.uploadFile(imageFile);
-        dto.setImageUrl(imageUrl);
+        // Upload the images to Cloudinary and get the URLs
+        if (posterImageFile != null && !posterImageFile.isEmpty()) {
+            String posterImageUrl = cloudinaryService.uploadFile(posterImageFile);
+            dto.setPosterImageUrl(posterImageUrl);
+        }
+
+        if (bannerImageFile != null && !bannerImageFile.isEmpty()) {
+            String bannerImageUrl = cloudinaryService.uploadFile(bannerImageFile);
+            dto.setBannerImageUrl(bannerImageUrl);
+        }
 
         MovieEntity entity = movieMapper.toEntity(dto);
         MovieEntity savedEntity = movieRepository.save(entity);
@@ -61,26 +67,15 @@ public class MovieServiceImpl implements MovieService {
     public Iterable<MovieResponseDTO> findAll(int pageNo, int pageSize, String sortBy, String sortDir) {
         return null;
     }
-
-    @Override
-    public List<MovieResponseDTO> findAll(boolean statusInDBOfMovie, int pageNo, int pageSize, String sortBy, String sortDir) {
-        PageRequest pageRequest = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.fromString(sortDir), sortBy));
-        Page<MovieEntity> pagedResult = movieRepository.findAllByDeleted(pageRequest, statusInDBOfMovie);
-
-        return pagedResult
-                .stream()
-                .map(movieMapper::toResponseDTO)
-                .collect(Collectors.toList());
-    }
-
+    
     @Override
     public MovieResponseDTO update(MovieRequestDTO movieRequestDTO) {
         return null;
     }
 
     @Override
-    public MovieResponseDTO update(MovieRequestDTO dto, int id, MultipartFile imageFile) throws IOException {
-        MovieEntity entity = movieRepository.findById(id)
+    public MovieResponseDTO update(MovieRequestDTO dto, int id, MultipartFile posterImageFile, MultipartFile bannerImageFile) throws IOException {
+        MovieEntity entity = movieRepository.findByIdAndDeletedIsFalse(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Movie not found with id " + id));
 
         // Check if the updated name is already taken by another movie
@@ -89,10 +84,15 @@ public class MovieServiceImpl implements MovieService {
             throw new ResourceAlreadyExistsException("A movie with the name '" + dto.getName() + "' already exists.");
         }
 
-        // Upload new image if provided and update the entity's imageUrl
-        if (imageFile != null && !imageFile.isEmpty()) {
-            String imageUrl = cloudinaryService.uploadFile(imageFile);
-            dto.setImageUrl(imageUrl);
+        // Upload new images if provided and update the entity's image URLs
+        if (posterImageFile != null && !posterImageFile.isEmpty()) {
+            String posterImageUrl = cloudinaryService.uploadFile(posterImageFile);
+            dto.setPosterImageUrl(posterImageUrl);
+        }
+
+        if (bannerImageFile != null && !bannerImageFile.isEmpty()) {
+            String bannerImageUrl = cloudinaryService.uploadFile(bannerImageFile);
+            dto.setBannerImageUrl(bannerImageUrl);
         }
 
         // Update other fields
@@ -103,7 +103,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public void delete(int id) {
-        MovieEntity entity = movieRepository.findById(id)
+        MovieEntity entity = movieRepository.findByIdAndDeletedIsFalse(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Movie not found with id " + id));
         entity.setDeleted(true);
         movieRepository.save(entity);
@@ -125,4 +125,18 @@ public class MovieServiceImpl implements MovieService {
         return entities.stream().map(movieMapper::toResponseDTO).collect(Collectors.toList());
     }
 
+    @Override
+    public MovieListResponseDTO findAll(boolean statusInDBOfMovie, String sortBy, String sortDir) {
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDir), sortBy);
+        List<MovieEntity> movieEntities = movieRepository.findAllByDeleted(statusInDBOfMovie, sort);
+
+        List<MovieResponseDTO> movies = movieEntities
+                .stream()
+                .map(movieMapper::toResponseDTO)
+                .collect(Collectors.toList());
+
+        long totalCount = movieRepository.countByDeleted(statusInDBOfMovie);
+
+        return new MovieListResponseDTO(movies, totalCount);
+    }
 }

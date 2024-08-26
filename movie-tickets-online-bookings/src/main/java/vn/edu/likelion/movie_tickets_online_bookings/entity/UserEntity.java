@@ -5,15 +5,16 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import vn.edu.likelion.movie_tickets_online_bookings.entity.enums.Role;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@EqualsAndHashCode( callSuper = false )
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "users")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Builder
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserEntity extends BaseEntity {
 
@@ -32,6 +33,5 @@ public class UserEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     Role role;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    List<TicketEntity> tickets;
+    int status;
 }

@@ -18,11 +18,14 @@ public abstract class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    @Column(nullable = true, updatable = false)
+    @Column(updatable = false)
     LocalDateTime createdAt;
 
-    @Column(nullable = true, insertable = false)
+    @Column(insertable = false)
     LocalDateTime updatedAt;
+
+    @Column
+    boolean deleted = false;
 
     // Tự động tạo khi tạo dữ liệu
     @PrePersist
@@ -35,7 +38,4 @@ public abstract class BaseEntity {
     protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
-
-    @Column
-    int isDeleted;
 }

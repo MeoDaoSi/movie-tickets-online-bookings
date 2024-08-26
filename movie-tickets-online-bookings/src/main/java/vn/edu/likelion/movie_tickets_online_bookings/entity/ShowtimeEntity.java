@@ -1,41 +1,38 @@
 package vn.edu.likelion.movie_tickets_online_bookings.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-@EqualsAndHashCode( callSuper = false )
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "showtimes")
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ShowtimeEntity extends BaseEntity {
-    private static final long serialVersionUID = 1L;
 
     @Column(name = "showtime_date", nullable = false)
-    @NonNull
-    LocalDate showtime_date;
+    LocalDate showtimeDate;
 
     @Column(name = "start_time", nullable = false)
-    @NonNull
     LocalTime startTime;
 
-    @Column(name = "end_time", nullable = false)
-    @NonNull
-    LocalTime endTime;
+    @Column(name = "duration", nullable = false)
+    int duration;
 
     @ManyToOne(fetch = FetchType.EAGER)
     MovieEntity movie;
 
     @ManyToOne(fetch = FetchType.EAGER)
     HallEntity hall;
-
-    @OneToMany(mappedBy = "showtime")
-    List<TicketEntity> tickets;
 
 }

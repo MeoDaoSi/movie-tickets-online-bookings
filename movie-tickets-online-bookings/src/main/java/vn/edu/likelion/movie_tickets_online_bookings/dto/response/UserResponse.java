@@ -20,7 +20,7 @@ public class UserResponse {
 
     private String email;
 
-    private String phone;
+    private String phoneNumber;
 
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime createdAt;

@@ -1,28 +1,44 @@
 package vn.edu.likelion.movie_tickets_online_bookings.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.List;
+import java.time.LocalDate;
 
-@EqualsAndHashCode( callSuper = false )
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "movies")
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class MovieEntity extends BaseEntity{
+public class MovieEntity extends BaseEntity {
 
-    @Column(name = "name", nullable = false)
-    @NonNull
+    @Column(name = "name", unique = true, nullable = false)
     String name;
 
     @Column(name = "description")
     String description;
 
-    @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
-    private List<ShowtimeEntity> showtimes;
+    @Column(name = "release_date")
+    LocalDate releaseDate;
+
+    @Column(name = "cast", nullable = false)
+    String cast;
+
+    @Column(name = "trailer_url")
+    String trailer;
+
+    @Column(name = "poster_image_url")
+    String posterImageUrl;
+
+    @Column(name = "banner_image_url")  
+    String bannerImageUrl;
+
+    @Column(name = "rating")
+    Double rating;
 }

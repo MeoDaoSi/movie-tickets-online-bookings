@@ -88,13 +88,8 @@ public class SeatServiceImpl implements SeatService {
         // Update the HallEntity reference
         entity.setHall(newHall);
 
-        // Update other fields in the SeatEntity
         seatMapper.updateEntityFromDTO(dto, entity);
-
-        // Save the updated SeatEntity
         SeatEntity updatedEntity = seatRepository.save(entity);
-
-        // Return the updated DTO
         return seatMapper.toResponseDTO(updatedEntity);
     }
 

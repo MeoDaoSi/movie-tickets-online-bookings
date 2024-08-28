@@ -76,11 +76,11 @@ public class MovieController {
         return createResponse("success", movies, "Movies retrieved successfully.");
     }
 
-    // New endpoint for finding all movies without pagination
+    // finding all movies
     @GetMapping
     public ResponseEntity<Map<String, Object>> getAllMovie(@Validated @RequestParam(value = "status", required = false, defaultValue = "false") boolean statusInDBOfMovie,
-                                                           @Validated @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy,
-                                                           @Validated @RequestParam(value = "sortDir", required = false, defaultValue = "asc") String sortDir) {
+                                                           @Validated @RequestParam(value = "sortBy", required = false, defaultValue = "releaseDate") String sortBy,
+                                                           @Validated @RequestParam(value = "sortDir", required = false, defaultValue = "desc") String sortDir) {
         MovieListResponseDTO movies = movieService.findAll(statusInDBOfMovie, sortBy, sortDir);
         return createResponse("success", movies, "Movies retrieved successfully.");
     }

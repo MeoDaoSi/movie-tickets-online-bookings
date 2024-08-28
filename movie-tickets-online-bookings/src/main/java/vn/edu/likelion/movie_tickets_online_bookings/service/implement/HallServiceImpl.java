@@ -47,12 +47,10 @@ public class HallServiceImpl implements HallService {
     }
 
     @Override
-    public List<HallResponseDTO> findAll(boolean statusInDBOfHall, int pageNo, int pageSize, String sortBy, String sortDir) {
-        PageRequest pageRequest = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.fromString(sortDir), sortBy));
-        Page<HallEntity> pagedResult = hallRepository.findAllByDeleted(pageRequest, statusInDBOfHall);
+    public List<HallResponseDTO> findAll(boolean statusInDBOfHall, String sortBy, String sortDir) {
+        List<HallEntity> hallEntities = hallRepository.findAllByDeleted(statusInDBOfHall, Sort.by(Sort.Direction.fromString(sortDir), sortBy));
 
-        return pagedResult
-                .stream()
+        return hallEntities.stream()
                 .map(hallMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
